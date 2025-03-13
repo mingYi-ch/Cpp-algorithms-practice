@@ -3,7 +3,6 @@
 
 using namespace std;
 
-// TODO: try insert from end to save space without copy
 class Solution
 {
 public:
@@ -19,22 +18,21 @@ public:
         }
         else
         {
-            vector<int> nums1_copy = nums1;
-            size_t j = 0;
-            for (size_t i = 0; i < m; i++)
+            int idx2 = n - 1; // end of vector nums2
+            for (int idx1 = m - 1; idx1 >= 0; idx1--)
             {
-                while (j < n && nums1_copy[i] >= nums2[j])
+                while (idx2 >= 0 && nums1[idx1] <= nums2[idx2])
                 {
                     nums1.pop_back();
-                    nums1.insert(nums1.begin() + j + i, nums2[j]);
-                    ++j;
+                    nums1.insert(nums1.begin() + idx1 + 1, nums2[idx2]);
+                    --idx2;
                 }
 
-                // the end of nums1
-                if (i == m - 1 && j != n)
+                // the start of nums1
+                if (idx1 == 0 && idx2 >= 0)
                 {
-                    nums1.resize(m + j);                                       // j elem inserted
-                    nums1.insert(nums1.end(), nums2.begin() + j, nums2.end()); // Append elements from nums2[j:n]
+                    nums1.resize(m + n - idx2 - 1);                                       // remove ending 0s
+                    nums1.insert(nums1.begin(), nums2.begin(), nums2.begin() + idx2 + 1); // idx2 + 1 is the count to be inserted
                 }
             }
         }
