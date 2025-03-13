@@ -2,6 +2,38 @@
 #include <iostream>
 
 using namespace std;
+class SolutionGPT
+{
+public:
+    void merge(vector<int> &nums1, int m, vector<int> &nums2, int n)
+    {
+        // Start from the end of both arrays
+        int16_t idx1 = m - 1;          // Pointer for nums1
+        int16_t idx2 = n - 1;          // Pointer for nums2
+        int16_t idxMerged = m + n - 1; // Pointer for the last element in nums1 (merged array)
+
+        // Merge the two arrays starting from the end
+        while (idx1 >= 0 && idx2 >= 0)
+        {
+            if (nums1[idx1] > nums2[idx2])
+            {
+                nums1[idxMerged--] = nums1[idx1--];
+            }
+            else
+            {
+                nums1[idxMerged--] = nums2[idx2--];
+            }
+        }
+
+        // If there are remaining elements in nums2, copy them over
+        while (idx2 >= 0)
+        {
+            nums1[idxMerged--] = nums2[idx2--];
+        }
+
+        // No need to do anything for nums1 since it is already in place
+    }
+};
 
 class Solution
 {
