@@ -2,6 +2,8 @@
 #include <iostream>
 
 using namespace std;
+
+// 3 pointers
 class SolutionGPT
 {
 public:
@@ -35,6 +37,7 @@ public:
     }
 };
 
+// 2 pointers
 class Solution
 {
 public:
