@@ -22,8 +22,8 @@ public:
         }
         if (pt1 == len_s)
         {
-            return (true);
+            return true;
         }
-        return (false);
+        return false;
     }
 };
