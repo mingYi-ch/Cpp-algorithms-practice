@@ -58,6 +58,6 @@ public:
 
             } while (now.size() != 0);
         }
-        return (res);
+        return res;
     }
 };

@@ -2,9 +2,6 @@
 #include <vector>
 using namespace std;
 
-#include <vector>
-using namespace std;
-
 class Solution
 {
 public:
@@ -19,6 +16,6 @@ public:
                 nums[cnt++] = elem;
             }
         }
-        return (cnt);
+        return cnt;
     }
 };
