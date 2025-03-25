@@ -5,30 +5,34 @@
 using namespace std;
 
 // check all possible min_len: bad complexity O(n^2)
-// sliding window
+// sliding window, bug, to will go beyond the to
+#include <vector>
+#include <iterator>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
 class Solution
 {
 public:
     int minSubArrayLen(int target, vector<int> &nums)
     {
         int min_len = INT_MAX;
-        auto start = nums.begin();
-        auto end = start;
-
         int sum = 0;
-        while (end != nums.end() && start <= end)
+        auto from = nums.begin();
+        auto to = from;
+
+        while (to != nums.end())
         {
-            if (sum < target)
+            sum += *to;
+
+            while (sum >= target)
             {
-                sum += *end;
-                ++end;
+                min_len = min(min_len, (int)distance(from, to) + 1); // from will only be larger than to by -1, then ++from catch up
+                sum -= *from;
+                ++from;
             }
-            else
-            {
-                min_len = min(min_len, (int)distance(start, end) + 1);
-                sum -= *start;
-                ++start;
-            }
+            ++to;
         }
 
         return (min_len == INT_MAX) ? 0 : min_len;
