@@ -1,9 +1,3 @@
-#include <vector>
-#include <iterator>
-#include <iostream>
-#include <algorithm>
-using namespace std;
-
 // check all possible min_len: bad complexity O(n^2)
 // sliding window, bug, to will go beyond the to
 #include <vector>
