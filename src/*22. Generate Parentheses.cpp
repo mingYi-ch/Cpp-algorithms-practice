@@ -6,6 +6,7 @@
 #include <algorithm>
 using namespace std;
 
+// complexity problem O(C(n)*n^2)?
 class Solution
 {
 private:
@@ -47,6 +48,46 @@ public:
         sort(res.begin(), res.end());
         auto last = unique(res.begin(), res.end());
         res.erase(last, res.end());
+        return res;
+    }
+};
+
+// complexity problem O(C(n)*n, backtracking algo, decision tree, DFS
+class Solution
+{
+private:
+    void backtrack(vector<string> &res, string &cur, size_t open, size_t close, size_t n)
+    {
+        // base case, copy cur to a list
+        if (cur.size() == 2 * n)
+        {
+            res.push_back(cur);
+        }
+
+        if (open < n)
+        {
+            cur.push_back('(');
+            backtrack(res, cur, open + 1, close, n);
+            cur.pop_back();
+        }
+
+        if (close < open)
+        {
+            cur.push_back(')');
+            backtrack(res, cur, open, close + 1, n);
+            cur.pop_back();
+        }
+    }
+
+public:
+    vector<string> generateParenthesis(int n)
+    {
+        vector<string> res;
+        size_t open = 0;
+        size_t close = 0;
+
+        string cur;
+        backtrack(res, cur, open, close, n);
         return res;
     }
 };
