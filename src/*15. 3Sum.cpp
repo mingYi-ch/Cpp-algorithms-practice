@@ -24,7 +24,7 @@ public:
             while (pt2 < pt3)
             {
                 sum = *pt1 + *pt2 + *pt3;
-                if (sum = 0)
+                if (sum == 0)
                 {
                     res.push_back({*pt1, *pt2, *pt3});
 
