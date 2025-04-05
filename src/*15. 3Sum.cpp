@@ -12,7 +12,7 @@ public:
         sort(nums.begin(), nums.end());
         int *pt1 = nums.data();
         int *pt2 = nums.data() + 1;
-        int *pt3 = nums.data() + 2;
+        int *pt3 = nums.data() + nums.size() - 1;
 
         int *end = nums.data() + nums.size();
 
@@ -21,48 +21,34 @@ public:
         // sum is the the smallest here
         while (pt1 < end - 2)
         {
-            sum = *pt1 + *pt2 + *pt3;
-            if (sum >= 0)
+            while (pt2 < pt3)
             {
-                if (sum == 0)
+                sum = *pt1 + *pt2 + *pt3;
+                if (sum = 0)
                 {
                     res.push_back({*pt1, *pt2, *pt3});
-                }
-                return res;
-            }
-
-            while (pt2 < end - 1 && pt3 < end)
-            {
-                if (*pt3 == -4 && *pt1 == -5)
-                {
-                    cout << "pt1 == -5" << endl;
-                }
-
-                sum = *pt1 + *pt2 + *pt3;
-                if (sum >= 0 || pt3 == end - 1)
-                {
-                    if (sum == 0)
-                    {
-                        res.push_back({*pt1, *pt2, *pt3});
-                    }
 
                     ++pt2;
-                    while (pt2 < end - 1 && *pt2 == *(pt2 - 1))
+                    --pt3;
+                    while (*pt3 == *(pt3 + 1) && *pt2 == *(pt2 - 1) && pt2 < pt3)
+                    {
                         ++pt2;
-                    pt3 = pt2 + 1;
+                        --pt3;
+                    }
+                }
+                else if (sum < 0)
+                {
+                    do
+                    {
+                        ++pt2;
+                    } while (pt2 < pt3 && *pt2 == *(pt2 - 1));
                 }
                 else
                 {
-                    ++pt3;
-                    while (pt3 < end && *pt3 == *(pt3 - 1))
-                        ++pt3;
-                    if (pt3 == end)
+                    do
                     {
-                        ++pt2;
-                        while (pt2 < end - 1 && *pt2 == *(pt2 - 1))
-                            ++pt2;
-                        pt3 = pt2 + 1;
-                    }
+                        --pt3;
+                    } while (pt3 > pt2 && *pt3 == *(pt3 + 1));
                 }
             }
 
@@ -71,9 +57,8 @@ public:
             while (pt1 < end - 2 && *pt1 == *(pt1 - 1))
                 ++pt1;
             pt2 = pt1 + 1;
-            pt3 = pt2 + 1;
+            pt3 = end - 1;
         }
-
         return res;
     }
 };
