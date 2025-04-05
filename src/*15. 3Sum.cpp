@@ -17,28 +17,27 @@ public:
         int *end = nums.data() + nums.size();
 
         vector<vector<int>> res;
+        int sum = -1;
         // sum is the the smallest here
         while (pt1 < end - 2)
         {
-            int sum = *pt1 + *pt2 + *pt3;
-            // check if the sum is 0
-            if (sum == 0)
+            sum = *pt1 + *pt2 + *pt3;
+            if (sum >= 0)
             {
-                res.push_back({*pt1, *pt2, *pt3});
-            }
-
-            // check if the sum is positive
-            if (sum > 0)
-            {
-                sort(res.begin(), res.end());
-                auto last = unique(res.begin(), res.end());
-                res.erase(last, res.end());
+                if (sum == 0)
+                {
+                    res.push_back({*pt1, *pt2, *pt3});
+                }
                 return res;
             }
 
-            // check if the sum is negative
             while (pt2 < end - 1 && pt3 < end)
             {
+                if (*pt3 == -4 && *pt1 == -5)
+                {
+                    cout << "pt1 == -5" << endl;
+                }
+
                 sum = *pt1 + *pt2 + *pt3;
                 if (sum >= 0 || pt3 == end - 1)
                 {
@@ -46,25 +45,35 @@ public:
                     {
                         res.push_back({*pt1, *pt2, *pt3});
                     }
+
                     ++pt2;
+                    while (pt2 < end - 1 && *pt2 == *(pt2 - 1))
+                        ++pt2;
                     pt3 = pt2 + 1;
                 }
                 else
                 {
                     ++pt3;
+                    while (pt3 < end && *pt3 == *(pt3 - 1))
+                        ++pt3;
+                    if (pt3 == end)
+                    {
+                        ++pt2;
+                        while (pt2 < end - 1 && *pt2 == *(pt2 - 1))
+                            ++pt2;
+                        pt3 = pt2 + 1;
+                    }
                 }
             }
 
             // check new combinations
             ++pt1;
+            while (pt1 < end - 2 && *pt1 == *(pt1 - 1))
+                ++pt1;
             pt2 = pt1 + 1;
             pt3 = pt2 + 1;
         }
 
-        // remove duplicates
-        sort(res.begin(), res.end());
-        auto last = unique(res.begin(), res.end());
-        res.erase(last, res.end());
         return res;
     }
 };
