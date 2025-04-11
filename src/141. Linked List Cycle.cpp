@@ -19,27 +19,37 @@ struct ListNode
     ListNode(int x) : val(x), next(NULL) {}
 };
 
+/*
+Floyd's Cycle-Finding Algorithm:
+ (x1 + 2t) mod n , (x2 + t) mod n, when they are equal slow and fast will meet;
+ ((x1 + 2t) - (x2 + t) ) mod n
+*/
+
 class Solution
 {
 public:
     bool hasCycle(ListNode *head)
     {
-        unordered_map<ListNode *, bool> cnt;
-        ListNode *cur = head;
-
-        cnt[head] = true;
-        while (cur != NULL)
+        if (head == nullptr || head->next == nullptr)
         {
-            cur = cur->next;
-            if (cnt[cur])
+            return false;
+        }
+
+        ListNode *slow = head;
+        ListNode *fast = head->next->next;
+
+        while (slow != fast)
+        {
+            if (fast == nullptr || slow == nullptr || fast->next == nullptr)
             {
-                return true;
+                return false;
             }
             else
             {
-                cnt[cur] = true;
+                slow = slow->next;
+                fast = fast->next->next;
             }
         }
-        return false;
+        return true;
     }
 };
