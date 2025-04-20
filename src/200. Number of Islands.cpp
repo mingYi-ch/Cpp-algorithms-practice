@@ -11,51 +11,45 @@ public:
     int numIslands(vector<vector<char>> &grid)
     {
         size_t landNum = 0;
+        // four corners
+        static const array<pair<int, int>, 4> corners{{{-1, 0},
+                                                       {1, 0},
+                                                       {0, 1},
+                                                       {0, -1}
+
+        }}; // 3 brackets for  initializing
+
         for (size_t ridx = 0; ridx < grid.size(); ridx++)
         {
             for (size_t cidx = 0; cidx < grid[ridx].size(); cidx++)
             {
                 char cell = grid[ridx][cidx];
-                if (cell == '1')
+                if (cell == '1') // check for new Island
                 {
                     ++landNum;
                     deque<pair<int, int>> neis;
-                    pair<int, int> neiCoord(ridx, cidx);
-                    neis.push_back(neiCoord);
+                    neis.emplace_back(ridx, cidx);
+                    grid[ridx][cidx] = '-';
 
                     // find all connected cells
                     while (!neis.empty())
                     {
                         auto nei = neis.front();
                         neis.pop_front();
+
                         int ridx_nei = nei.first;
                         int cidx_nei = nei.second;
 
-                        grid[ridx_nei][cidx_nei] = '-';
-                        // right
-                        if (ridx_nei + 1 < grid.size() && grid[ridx_nei + 1][cidx_nei] == '1')
+                        for (auto corner : corners)
                         {
-                            neis.emplace_back(ridx_nei + 1, cidx_nei);
-                        }
-                        // down
-                        if (cidx_nei + 1 < grid[ridx_nei].size() && grid[ridx_nei][cidx_nei + 1] == '1')
-                        {
-                            pair<int, int> neiCoord(ridx_nei, cidx_nei + 1);
-                            neis.push_back(neiCoord);
-                        }
-
-                        // up
-                        if (ridx_nei - 1 < grid.size() && grid[ridx_nei - 1][cidx_nei] == '1')
-                        {
-                            pair<int, int> neiCoord(ridx_nei - 1, cidx_nei);
-                            neis.push_back(neiCoord);
-                        }
-
-                        // down
-                        if (cidx_nei - 1 < grid[ridx_nei].size() && grid[ridx_nei][cidx_nei - 1] == '1')
-                        {
-                            pair<int, int> neiCoord(ridx_nei, cidx_nei - 1);
-                            neis.push_back(neiCoord);
+                            int coordRow = ridx_nei + corner.first;
+                            int coordCol = cidx_nei + corner.second;
+                            bool isConnected = coordRow >= 0 && coordRow < grid.size() && coordCol >= 0 && coordCol < grid[coordRow].size() && grid[coordRow][coordCol] == '1'; // expend current island
+                            if (isConnected)
+                            {
+                                neis.emplace_back(coordRow, coordCol);
+                                grid[coordRow][coordCol] = '-'; // avoid revisiting
+                            }
                         }
                     }
                 }
