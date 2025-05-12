@@ -1,4 +1,4 @@
-# Leetcode-150-Algorithms-Submission-C++
+# Interval map implementations benchmark
 
 ## Requirements
 
