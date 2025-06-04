@@ -1,5 +1,7 @@
 # Interval map implmentation
 
+I benchmarked two different implementations of interval map from me, the one with erase by range has better performance.
+
 ## Requirements
 
 - C++20 compatible compiler (e.g., `g++ >= 10`, `clang++ >= 11`)
