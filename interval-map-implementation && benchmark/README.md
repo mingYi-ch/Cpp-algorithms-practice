@@ -1,6 +1,6 @@
 # Interval map implmentation
 
-I benchmarked two different implementations of interval map from me, the one with erase by range has better performance.
+I benchmarked two different implementations of interval map from me, the one with erase by range (`benchmark/interval_map_erase_range.hpp`) has better performance.
 
 ## Requirements
 
